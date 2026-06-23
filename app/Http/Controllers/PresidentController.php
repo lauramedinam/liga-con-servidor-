@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Game;
+use App\Models\President;
 use Illuminate\Http\Request;
 
-class GameController extends Controller
+class PresidentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::with(['teams', 'goals'])->get();
-        return $games;
+        $presidents = President::all();
+        return $presidents;
     }
 
     /**
@@ -28,14 +28,13 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'date' => 'required|date',
-            'local_goal' => 'required|integer',
-            'away_goal' => 'required|integer',
+            'nombre' => 'required|max:255',
+            'year' => 'required|date',
         ]);
 
-        $game = Game::create($request->all());
+        $president = President::create($request->all());
 
-        return $game;
+        return $president;
     }
 
     /**
@@ -46,39 +45,38 @@ class GameController extends Controller
      */
     public function show($id)
     {
-        $game = Game::with(['teams', 'goals'])->findOrFail($id);
-        return $game;
+        $president = President::included()->findOrFail($id);
+        return $president;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Game  $game
+     * @param  \App\Models\President  $president
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Game $game)
+    public function update(Request $request, President $president)
     {
         $request->validate([
-            'date' => 'required|date',
-            'local_goal' => 'required|integer',
-            'away_goal' => 'required|integer',
+            'nombre' => 'required|max:255',
+            'year' => 'required|date',
         ]);
 
-        $game->update($request->all());
+        $president->update($request->all());
 
-        return $game;
+        return $president;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Game  $game
+     * @param  \App\Models\President  $president
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy(President $president)
     {
-        $game->delete();
-        return $game;
+        $president->delete();
+        return $president;
     }
 }

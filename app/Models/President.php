@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class President extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    protected $allowIncluded = ['team'];
 
     //  Relacion Uno A Uno (president has one team, since teams.president_id references this)
     public function team()
@@ -24,9 +27,7 @@ class President extends Model
         }
         $relations = explode(',', request('included'));
        
-        return $this->allowIncluded;
-       
-       $allowIncluded=collect($this->allowIncluded);
+        $allowIncluded=collect($this->allowIncluded);
         foreach($relations as $key => $relationship){
             
             if(!$allowIncluded->contains($relationship)){
@@ -35,7 +36,7 @@ class President extends Model
         
         }
 
-    $query->with($relations);
+        $query->with($relations);
  }
  
 
