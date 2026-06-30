@@ -7,15 +7,15 @@ use App\Http\Controllers\GameController;
 /*
 use App\Http\Controllers\Api\TeamController;
 use App\Http\Controllers\Api\PlayerController;
-use App\Http\Controllers\Api\GameController;
 use App\Http\Controllers\Api\GoalController;
 */
 
 
-Route::get('/presidents', [PresidentController::class,'index']);
+
 Route::post('/presidents', [PresidentController::class,'store']);
-Route::get('/presidents/{president}', [PresidentController::class,'show']);
+Route::get('/presidents', [PresidentController::class,'index']);
 Route::put('/presidents/{president}', [PresidentController::class,'update']);
+Route::get('/presidents/{president}', [PresidentController::class,'show']);
 Route::delete('/presidents/{president}', [PresidentController::class,'destroy']);
 
 /*
@@ -27,3 +27,8 @@ Route::post('/games', [GameController::class,'store']);
 Route::get('/games/{game}', [GameController::class,'show']);
 Route::put('/games/{game}', [GameController::class,'update']);
 Route::delete('/games/{game}', [GameController::class,'destroy']);
+
+
+/*
+Route::apiResource('games',GameController::class)->names('api.v1.games');
+*/
